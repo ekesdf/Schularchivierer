@@ -86,10 +86,7 @@ print(f"The model has detected {count_chars} Chars in {round(time()-start_char_d
 
 for char in liste_chars:
 
-    if char.bbox[0] < 0  or char.bbox[1] < 0 or char.bbox[2] < 0 or char.bbox[3]:
-        
-        print(char.bbox)
-        print(char.textregion_bbox)
+
 
 
 

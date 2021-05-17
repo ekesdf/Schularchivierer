@@ -1,5 +1,4 @@
-from PIL import Image
-
-img = Image.open("/home/yolo/Schreibtisch/Schularchivierer/input/img-00400.jpg")
-
-img.crop((1310,1595,1331,1631)).save("test.jpg")
+class PDF(FPDF):
+    def lines(self):
+        self.set_line_width(0.0)
+        self.line(0,pdf_h/2,210,pdf_h/2)

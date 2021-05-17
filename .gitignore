@@ -6,3 +6,4 @@ ai/char_localization/trained_model
 temp
 test.jpg
 python/utils/__pycache__
+python/testroom.py
