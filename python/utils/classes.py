@@ -66,8 +66,10 @@ class Char:
             self.normalized_x2 = ((char_bbox[2]-dist[0])*self.scale[0])+textregion_bbox[0]
             self.normalized_y2 = ((char_bbox[3]-dist[1])*self.scale[1])+textregion_bbox[1]
 
-
-        
+        if self.normalized_x1 < 0: self.normalized_x1 = 0
+        if self.normalized_y1 < 0: self.normalized_y1 = 0
+        if self.normalized_x2 < 0: self.normalized_x2 = 0
+        if self.normalized_y2 < 0: self.normalized_y2 = 0
 
         self.bbox = [self.normalized_x1, self.normalized_y1, self.normalized_x2, self.normalized_y2]
 
