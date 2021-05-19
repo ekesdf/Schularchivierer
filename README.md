@@ -1,12 +1,7 @@
 # Schularchivierer
 
-Scannersetting: 
-
-                DPI:    300
-            
-                Width:  2397 pixel  
-
-                Heigth: 3484 pixel
-
-                Colormode : Black and White
-                
+Scannersetting:\n
+                DPI:    300\n
+                Width:  2397 pixel\n 
+                Heigth: 3484 pixel\n
+                Colormode : Black and White\n
