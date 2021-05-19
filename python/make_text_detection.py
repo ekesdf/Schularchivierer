@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import sys
-from os import system,listdir,environ
+from os import environ
 from time import time
+
 
 environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 
@@ -13,32 +15,23 @@ from ai.char_classification.python.classify_chars import make_classification
 from ai.char_localization.python.detect_char import make_char_detection
 from ai.text_region_localization.python.detect_region import make_region_detection
 from python.utils.cut_out_detections import cut_image
-from python.utils.make_char_annotations import make_char_annotations
-from python.utils.make_text_region_annotations import make_text_region_annotations
 from python.utils.normalize_text_regions import normalize_text_regions 
+from python.utils.calculate_position import calculate_position_of_char_in_the_pdf
 from python.utils.classes import Image,Textregion,Char
-
+from python.utils.pdf import PDF
 
 count_chars = 0
+pdf_shape =210,297
 cwd2 = "temp/images/text_regions/" 
 cwd3 = "temp/images/chars/"
+temp = []
+liste_chars = []
 
 
-
-
-
-
-
-
-
-
-image_path = "input/img-00400.jpg"
+image_path = "input/img-00001.jpg"
 image_name = image_path.split("/")[len(image_path.split("/"))-1]
 
-text_regions,time_regions_detection,shape_image = make_region_detection(image_path)
-
-
-
+text_regions,time_regions_detection,image_shape = make_region_detection(image_path)
 
 print()
 print(f"The model has detected {len(text_regions)} text regions in {round(time_regions_detection,6)} seconds\n")
@@ -50,14 +43,17 @@ liste_images = cut_image(text_regions,image_path,"text_region")
 dict_scale_factors,dist = normalize_text_regions(liste_images,image_name)
 start_char_detection = time()
 
-temp = []
 for index in range(len(text_regions)):
 
-    temp.append(Textregion(image_name,str("normalized "+str(index)+".jpg"),text_regions[index],dict_scale_factors[index],dist[index]))
+    bbox = text_regions[index]
+    scale = dict_scale_factors[index]
+    distance = dist[index]
+    region_name = str("normalized "+str(index)+".jpg")
 
-img = Image(image_name,shape_image,temp)
+    temp.append(Textregion(image_name,region_name,bbox,scale,distance))
 
-liste_chars = []
+img = Image(image_name,image_shape,temp)
+
 
 for region in img.textregions:
 
@@ -71,23 +67,32 @@ for region in img.textregions:
 
         char_image = liste_chars_cutout[index]
         char_bbox = chars[index]
-
         label = make_classification(char_image)
         char = Char(img.name,region.name,region.bbox,region.scale,region.dist,char_bbox,label)
         liste_chars.append(char)
 
-
-    
     count_chars += len(chars) 
 
-# print(liste_chars)
 
 print(f"The model has detected {count_chars} Chars in {round(time()-start_char_detection,6)} seconds.\n")
 
+
+
+###                     ###
+#  Initiate the PDF file  #
+###                     ###
+
+pdf = PDF()
+pdf.add_page()
+
 for char in liste_chars:
 
+    label = char.label
+    
+    x1,y1 = char.bbox[0], char.bbox[1]
+    x1,y1 = calculate_position_of_char_in_the_pdf(image_shape,pdf_shape,(x1,y1))
+    pdf.write_char(label[0], x1, y1)
 
+pdf.output("test.pdf")
 
-
-
-# print(f"To translate the Site took {round(time()-translate_start,6)} seconds\n")
+print(f"To translate the Site took {round(time()-translate_start,6)} seconds\n")    
