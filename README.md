@@ -1,7 +1,7 @@
 # Schularchivierer
 
 
-**Scannersetting:**                             
+Scannersetting:                            
                 
                 [Using Xsane](https://wiki.ubuntuusers.de/XSane/)
 
