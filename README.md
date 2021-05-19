@@ -3,11 +3,9 @@
 
                            
                 
-[Using Xsane](https://wiki.ubuntuusers.de/XSane/)
+[Using Xsane Version: 0.999](https://wiki.ubuntuusers.de/XSane/)
 
 **Scannersetting:**
-
-    Version: 0.999
 
     DPI:    300
 
