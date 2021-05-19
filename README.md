@@ -1,7 +1,8 @@
 # Schularchivierer
 
 
- Scannersetting:
+**Scannersetting**:
+
                 DPI:    300
 
                 Width:  2397 pixel
