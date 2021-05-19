@@ -1,7 +1,11 @@
 # Schularchivierer
 
 
-**Scannersetting**:
+**Scannersetting:**                             
+                
+                **Using Xsane** https://wiki.ubuntuusers.de/XSane/
+
+                Version: 0.999
 
                 DPI:    300
 
