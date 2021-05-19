@@ -3,7 +3,7 @@
 
 **Scannersetting:**                             
                 
-                [**Using Xsane**](https://wiki.ubuntuusers.de/XSane/)
+                [Using Xsane](https://wiki.ubuntuusers.de/XSane/)
 
                 Version: 0.999
 
