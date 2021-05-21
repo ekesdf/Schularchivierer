@@ -19,6 +19,7 @@ from python.utils.normalize_text_regions import normalize_text_regions
 from python.utils.calculate_position import calculate_position_of_char_in_the_pdf
 from python.utils.classes import Image,Textregion,Char
 from python.utils.pdf import PDF
+from python.utils.clear_temp_folder import clear_temp_folder
 
 count_chars = 0
 pdf_shape =210,297
@@ -26,9 +27,12 @@ cwd2 = "temp/images/text_regions/"
 cwd3 = "temp/images/chars/"
 temp = []
 liste_chars = []
-
-
 image_path = "input/img-00001.jpg"
+
+
+
+clear_temp_folder()
+
 image_name = image_path.split("/")[len(image_path.split("/"))-1]
 
 text_regions,time_regions_detection,image_shape = make_region_detection(image_path)
