@@ -10,7 +10,7 @@ python/testroom/*
 ai/char_classification/trained_model_old/saved_model.pb
 ai/char_classification/trained_model_old/variables/variables.data-00000-of-00001
 ai/char_classification/trained_model_old/variables/variables.index
-input/test.jpeg
+input/*
 test.pdf
 test.jpg
 
