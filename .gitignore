@@ -11,3 +11,6 @@ test.pdf
 ai/char_classification/trained_model_old/saved_model.pb
 ai/char_classification/trained_model_old/variables/variables.data-00000-of-00001
 ai/char_classification/trained_model_old/variables/variables.index
+input/test.jpeg
+test.jpeg.pdf
+test.jpg
