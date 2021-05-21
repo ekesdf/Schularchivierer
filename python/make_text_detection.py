@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import sys
-from os import environ
+from os import environ,chdir
 from time import time
 
 
 environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-
+chdir("/home/yolo/Schreibtisch/Schularchivierer")
 translate_start = time()
 sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
 
