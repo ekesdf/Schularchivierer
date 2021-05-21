@@ -4,7 +4,7 @@ ai/char_classification/trained_model
 ai/text_region_localization/trained_model
 ai/char_localization/trained_model
 temp
-output
+output/*
 python/utils/__pycache__
 python/testroom/*
 ai/char_classification/trained_model_old/saved_model.pb
