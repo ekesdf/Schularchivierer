@@ -89,9 +89,9 @@ def make_char_detection(image_path):
 
 			# Array format is: x1, y1, x2, y2
 			results.append([x, y,x+w,y+h])
-			cv2.rectangle(image, (x, y), (x + w, y + h), (255,255,0), 2)
+			# cv2.rectangle(image, (x, y), (x + w, y + h), (255,255,0), 2)
 
 
-	cv2.imwrite("test.jpg", image)
+	# cv2.imwrite("test.jpg", image)
 
 	return results,end-start
