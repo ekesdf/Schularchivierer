@@ -1,6 +1,8 @@
 *.weights
 *.backup
 ai/char_classification/trained_model
+ai/char_classification/archive
+ai/char_classification/label/label.txt
 ai/text_region_localization/trained_model
 ai/char_localization/trained_model
 temp
@@ -13,4 +15,5 @@ ai/char_classification/trained_model_old/variables/variables.index
 input/*
 test.pdf
 test.jpg
+
 
