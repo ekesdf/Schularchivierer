@@ -7,9 +7,9 @@ import os
 
 CONFIG_FILE  = 'ai/text_region_localization/trained_model/yolov4-leaky-416.cfg'
 WEIGHTS_FILE = 'ai/text_region_localization/trained_model/yolov4-leaky-416_last.weights'
-CONFIDENCE_THRESHOLD = 0.2
-WIDTH = 416
-HEIGHT = 416
+CONFIDENCE_THRESHOLD = 0.0
+WIDTH = 832
+HEIGHT = 832
 
 def make_region_detection(image_path):
 
@@ -77,7 +77,7 @@ def make_region_detection(image_path):
 
 	# apply non-maxima suppression to suppress weak, overlapping bounding
 	# boxes
-	idxs = cv2.dnn.NMSBoxes(boxes, confidences, CONFIDENCE_THRESHOLD,CONFIDENCE_THRESHOLD)
+	idxs = cv2.dnn.NMSBoxes(boxes, confidences, CONFIDENCE_THRESHOLD,0.4)
 	
 
 	# ensure at least one detection exists
