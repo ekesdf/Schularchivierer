@@ -27,7 +27,7 @@ cwd2 = "temp/images/text_regions/"
 cwd3 = "temp/images/chars/"
 temp = []
 liste_chars = []
-image_path = "input/test.jpeg"
+image_path = "input/img-00002.jpg"
 
 
 
@@ -97,6 +97,6 @@ for char in liste_chars:
     x1,y1 = calculate_position_of_char_in_the_pdf(image_shape,pdf_shape,(x1,y1))
     pdf.write_char(label[0], x1, y1)
 
-pdf.output("output/"+image_name[:-5]+".pdf")
+pdf.output("output/"+image_name[:-4]+".pdf")
 
 print(f"To translate the Site took {round(time()-translate_start,6)} seconds\n")    
