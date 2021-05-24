@@ -27,7 +27,7 @@ cwd2 = "temp/images/text_regions/"
 cwd3 = "temp/images/chars/"
 temp = []
 liste_chars = []
-image_path = "input/img-00002.jpg"
+image_path = "input/test0001.jpeg"
 
 
 

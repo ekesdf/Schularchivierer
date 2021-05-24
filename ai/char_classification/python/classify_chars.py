@@ -21,7 +21,7 @@ def make_classification(img):
     # reshape it to the input size of the trained model
     img = np.reshape(img, (1, 20, 20, 3))
 
-    #makes the actual classification
+    # makes the actual classification
     predictions = trained_model.predict(img)
 
     # calculates the score of the classification

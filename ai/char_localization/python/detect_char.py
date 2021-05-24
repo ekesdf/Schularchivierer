@@ -6,7 +6,7 @@ import cv2
 
 CONFIG_FILE  = "ai/char_localization/trained_model/detect_v2.cfg"
 WEIGHTS_FILE = "ai/char_localization/trained_model/detect_v2.weights"
-CONFIDENCE_THRESHOLD = 0.2
+CONFIDENCE_THRESHOLD = 0.8
 WIDTH = 832
 HEIGHT = 832
 
@@ -74,7 +74,7 @@ def make_char_detection(image_path):
 
 	# apply non-maxima suppression to suppress weak, overlapping bounding
 	# boxes
-	idxs = cv2.dnn.NMSBoxes(boxes, confidences, CONFIDENCE_THRESHOLD,0.4)
+	idxs = cv2.dnn.NMSBoxes(boxes, confidences, CONFIDENCE_THRESHOLD,0.2)
 	
 
 	# ensure at least one detection exists
@@ -89,9 +89,9 @@ def make_char_detection(image_path):
 
 			# Array format is: x1, y1, x2, y2
 			results.append([x, y,x+w,y+h])
-			# cv2.rectangle(image, (x, y), (x + w, y + h), (255,255,0), 2)
+			cv2.rectangle(image, (x, y), (x + w, y + h), (255,255,0), 2)
 
 
-	# cv2.imwrite("test.jpg", image)
+	cv2.imwrite("temp/test.jpg", image)
 
 	return results,end-start

@@ -7,7 +7,7 @@ import os
 
 CONFIG_FILE  = 'ai/text_region_localization/trained_model/yolov4-leaky-416.cfg'
 WEIGHTS_FILE = 'ai/text_region_localization/trained_model/yolov4-leaky-416_last.weights'
-CONFIDENCE_THRESHOLD = 0.5
+CONFIDENCE_THRESHOLD = 0.2
 WIDTH = 416
 HEIGHT = 416
 
