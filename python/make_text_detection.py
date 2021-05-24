@@ -27,7 +27,7 @@ cwd2 = "temp/images/text_regions/"
 cwd3 = "temp/images/chars/"
 temp = []
 liste_chars = []
-image_path = "input/test0001.jpeg"
+image_path = "input/test0002.jpg"
 
 
 
@@ -37,8 +37,7 @@ image_name = image_path.split("/")[len(image_path.split("/"))-1]
 
 text_regions,time_regions_detection,image_shape = make_region_detection(image_path)
 
-print()
-print(f"The model has detected {len(text_regions)} text regions in {round(time_regions_detection,6)} seconds\n")
+print(f"\nThe model has detected {len(text_regions)} text regions in {round(time_regions_detection,6)} seconds\n")
 
 # Detecting all the Textregions and normalize them for the Chardetection and further processing
 # writes the annotation for the corresponding Textregion.
@@ -78,7 +77,7 @@ for region in img.textregions:
     count_chars += len(chars) 
 
 
-print(f"The model has detected {count_chars} Chars in {round(time()-start_char_detection,6)} seconds.\n")
+print(f"\nThe model has detected {count_chars} Chars in {round(time()-start_char_detection,6)} seconds.\n")
 
 
 
