@@ -15,6 +15,6 @@ ai/char_classification/trained_model_old/variables/variables.index
 input/*
 test.pdf
 test.jpg
-
+python/__pycache__
 
 python/make_text_detection.py
