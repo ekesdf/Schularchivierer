@@ -1,8 +1,9 @@
 *.weights
 *.backup
-ai/char_classification/*
-ai/text_region_localization/trained_model
-ai/char_localization/trained_model
+*.cfg
+ai/char_classification/label
+ai/char_classification/archive
+ai/char_classification/trained_model
 temp
 output/*
 python/utils/__pycache__
