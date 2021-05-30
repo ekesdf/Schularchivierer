@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
+
+
 import sys
 from os import environ,chdir
 from time import time
 
-
 environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 chdir("/home/yolo/Schreibtisch/Schularchivierer")
-translate_start = time()
 sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
-
-
 
 from ai.char_classification.python.classify_chars import make_classification
 from ai.char_localization.python.detect_char import make_char_detection
@@ -20,6 +18,13 @@ from python.utils.calculate_position import calculate_position_of_char_in_the_pd
 from python.utils.classes import Image,Textregion,Char
 from python.utils.pdf import PDF
 from python.utils.clear_temp_folder import clear_temp_folder
+from python.utils.text_formatter import formatter
+
+
+translate_start = time()
+
+
+
 
 count_chars = 0
 pdf_shape =210,297
@@ -27,7 +32,7 @@ cwd2 = "temp/images/text_regions/"
 cwd3 = "temp/images/chars/"
 temp = []
 liste_chars = []
-image_path = "input/test0002.jpg"
+image_path = "input/test0001.jpg"
 
 
 
@@ -81,6 +86,12 @@ print(f"\nThe model has detected {count_chars} Chars in {round(time()-start_char
 
 
 
+
+print(formatter(liste_chars))
+
+
+
+
 ###                     ###
 #  Initiate the PDF file  #
 ###                     ###
@@ -90,11 +101,11 @@ pdf.add_page()
 
 for char in liste_chars:
 
-    label = char.label
+    label = char.label[0]
     
     x1,y1 = char.bbox[0], char.bbox[1]
     x1,y1 = calculate_position_of_char_in_the_pdf(image_shape,pdf_shape,(x1,y1))
-    pdf.write_char(label[0], x1, y1)
+    pdf.write_char(label, x1, y1)
 
 pdf.output("output/"+image_name[:-4]+".pdf")
 

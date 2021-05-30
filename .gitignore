@@ -5,10 +5,8 @@
 *.jpeg
 *.jpg
 *.pdf
+*.pyc
 ai/char_classification/archive
 ai/char_classification/trained_model
 temp
-python/utils/__pycache__
 python/testroom/*
-python/__pycache__
-

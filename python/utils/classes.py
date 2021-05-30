@@ -73,5 +73,21 @@ class Char:
 
         self.bbox = [self.normalized_x1, self.normalized_y1, self.normalized_x2, self.normalized_y2]
 
+class Grid:
+
+    def __init__(self,rows,cols):
+
+        self.number_rows = rows
+        self.number_cols = cols
+        self.grid  = []
+
+        for row_index in range(rows):
+            
+            row = []
+        
+            for col_index in range(cols): row.append(" ")
+
+            self.grid.append(row)
+
 
 
