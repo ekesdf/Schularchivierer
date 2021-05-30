@@ -1,20 +1,15 @@
 *.weights
 *.backup
-ai/char_classification/trained_model
-ai/char_classification/archive
-ai/char_classification/label/label.txt
+ai/char_classification/*
 ai/text_region_localization/trained_model
 ai/char_localization/trained_model
 temp
 output/*
 python/utils/__pycache__
 python/testroom/*
-ai/char_classification/trained_model_old/saved_model.pb
-ai/char_classification/trained_model_old/variables/variables.data-00000-of-00001
-ai/char_classification/trained_model_old/variables/variables.index
+ai/char_classification/trained_model_old/*
 input/*
 test.pdf
 test.jpg
 python/__pycache__
 
-python/make_text_detection.py
