@@ -1,15 +1,14 @@
 *.weights
 *.backup
 *.cfg
-ai/char_classification/label
+*.txt
+*.jpeg
+*.jpg
+*.pdf
 ai/char_classification/archive
 ai/char_classification/trained_model
 temp
-output/*
 python/utils/__pycache__
 python/testroom/*
-input/*
-test.pdf
-test.jpg
 python/__pycache__
 
