@@ -8,7 +8,6 @@ temp
 output/*
 python/utils/__pycache__
 python/testroom/*
-ai/char_classification/trained_model_old/*
 input/*
 test.pdf
 test.jpg
