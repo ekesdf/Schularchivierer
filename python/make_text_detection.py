@@ -76,7 +76,7 @@ for region in img.textregions:
         char_image = liste_chars_cutout[index]
         char_bbox = chars[index]
         label = make_classification(char_image)
-        char = Char(img.name,region.name,region.bbox,region.scale,region.dist,char_bbox,label)
+        char = Char(img.name,region.name,region.bbox,region.scale,region.dist,char_bbox,label[0])
         liste_chars.append(char)
 
     count_chars += len(chars) 
@@ -86,11 +86,7 @@ print(f"\nThe model has detected {count_chars} Chars in {round(time()-start_char
 
 
 
-
-print(formatter(liste_chars))
-
-
-
+text, start_x,start_y  = formatter(liste_chars)
 
 ###                     ###
 #  Initiate the PDF file  #
@@ -98,14 +94,20 @@ print(formatter(liste_chars))
 
 pdf = PDF()
 pdf.add_page()
+index = 0
 
-for char in liste_chars:
 
-    label = char.label[0]
-    
-    x1,y1 = char.bbox[0], char.bbox[1]
-    x1,y1 = calculate_position_of_char_in_the_pdf(image_shape,pdf_shape,(x1,y1))
-    pdf.write_char(label, x1, y1)
+
+
+for char in text:
+
+    corrected_x,current_y = calculate_position_of_char_in_the_pdf(image_shape,pdf_shape,(start_x,start_y))
+
+    pdf.write_char(char, corrected_x, current_y)
+
+    start_x += 30
+
+    index +=1
 
 pdf.output("output/"+image_name[:-4]+".pdf")
 
