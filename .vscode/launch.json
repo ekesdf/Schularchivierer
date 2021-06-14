@@ -8,7 +8,7 @@
             "name": "Schularchievierer",
             "type": "python",
             "request": "launch",
-            "program": "/home/yolo/Schreibtisch/Schularchivierer/python/make_text_detection.py",
+            "program": "python/make_text_detection.py",
             "console": "integratedTerminal"
         }
     ]
