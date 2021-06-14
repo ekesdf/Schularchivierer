@@ -6,6 +6,7 @@
 *.jpg
 *.pdf
 *.pyc
+*.json
 ai/char_classification/archive
 ai/char_classification/trained_model
 temp

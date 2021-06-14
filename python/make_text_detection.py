@@ -94,20 +94,15 @@ text, start_x,start_y  = formatter(liste_chars)
 
 pdf = PDF()
 pdf.add_page()
-index = 0
-
-
-
+pdf.set_font("Arial", size = 15)
 
 for char in text:
 
     corrected_x,current_y = calculate_position_of_char_in_the_pdf(image_shape,pdf_shape,(start_x,start_y))
 
-    pdf.write_char(char, corrected_x, current_y)
+    pdf.cell(corrected_x, current_y,txt = char )
 
-    start_x += 30
-
-    index +=1
+    start_x += 0.1
 
 pdf.output("output/"+image_name[:-4]+".pdf")
 
