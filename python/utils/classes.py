@@ -75,19 +75,30 @@ class Char:
 
 class Grid:
 
-    def __init__(self,rows,cols):
+    def __init__(self,rows,cols,cell_w,cell_h):
 
         self.number_rows = rows
         self.number_cols = cols
         self.grid  = []
 
-        for row_index in range(rows):
+    def make_grid(self):
+
+        for _ in range(self.number_rows):
             
             row = []
         
-            for col_index in range(cols): row.append(" ")
+            for _ in range(self.number_cols): row.append(" ")
 
             self.grid.append(row)
+        
+        return self.grid
 
+class Cell:
+
+    def __init__(self,char,row,col):
+
+        self.Char = char
+        self.row  = row
+        self.col  = col
 
 
