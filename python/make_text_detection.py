@@ -18,7 +18,11 @@ from python.utils.calculate_position import calculate_position_of_char_in_the_pd
 from python.utils.classes import Image,Textregion,Char
 from python.utils.pdf import PDF
 from python.utils.clear_temp_folder import clear_temp_folder
-from python.utils.text_formatter import formatter
+# from python.utils.text_formatter import formatter
+from python.testroom.map_detections_in_to_a_grid import write_char_into_the_grid
+
+import numpy as np 
+
 
 
 translate_start = time()
@@ -85,25 +89,41 @@ for region in img.textregions:
 print(f"\nThe model has detected {count_chars} Chars in {round(time()-start_char_detection,6)} seconds.\n")
 
 
+grid = write_char_into_the_grid(liste_chars)
 
-text, start_x,start_y  = formatter(liste_chars)
+for row in grid:
 
-###                     ###
-#  Initiate the PDF file  #
-###                     ###
+    print(row)
 
-pdf = PDF()
-pdf.add_page()
-pdf.set_font("Arial", size = 15)
+k = 0
 
-for char in text:
 
-    corrected_x,current_y = calculate_position_of_char_in_the_pdf(image_shape,pdf_shape,(start_x,start_y))
 
-    pdf.cell(corrected_x, current_y,txt = char )
 
-    start_x += 0.1
 
-pdf.output("output/"+image_name[:-4]+".pdf")
 
-print(f"To translate the Site took {round(time()-translate_start,6)} seconds\n")    
+
+
+
+
+# text, start_x,start_y  = formatter(liste_chars)
+
+# ###                     ###
+# #  Initiate the PDF file  #
+# ###                     ###
+
+# pdf = PDF()
+# pdf.add_page()
+# pdf.set_font("Arial", size = 15)
+
+# for char in text:
+
+#     corrected_x,current_y = calculate_position_of_char_in_the_pdf(image_shape,pdf_shape,(start_x,start_y))
+
+#     pdf.cell(corrected_x, current_y,txt = char )
+
+#     start_x += 0.1
+
+# pdf.output("output/"+image_name[:-4]+".pdf")
+
+# print(f"To translate the Site took {round(time()-translate_start,6)} seconds\n")    

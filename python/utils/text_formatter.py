@@ -4,7 +4,7 @@ sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
 
 from python.utils.classes import Grid
 
-grid = Grid(30,50).grid
+grid = Grid(30,50)
 
 def put_line(grid,text,start_col,row):
     
