@@ -6,7 +6,7 @@ window = Tk()
 window.title('File Explorer')
 
 # Set window size
-window.geometry("500x500")
+window.geometry("800x800")
 
 window.config(background = "white")
 
@@ -15,7 +15,11 @@ window.config(background = "white")
 
 def browseFiles():
 
-    filename = filedialog.askopenfilename(initialdir = "/home/yolo/Schreibtisch",title = "Select a File",filetypes = (("Image","*.jpg*","*.jpeg*","*.png*"),("all files", "*.*")))
+    filename = filedialog.askopenfilename(initialdir = "/home/yolo/Schreibtisch",
+                                          title = "Select a File",
+                                          filetypes = (("all files", "*.*"),("",".*"))
+                                          )
+
       
     # Change label contents
     label_file_explorer.configure(text="File Opened: "+filename)
@@ -24,7 +28,7 @@ def browseFiles():
 
 label_file_explorer = Label(window,
                         text = "File Explorer using Tkinter",
-                        width = 100, height = 4,
+                        width = 50, height = 4,
                         fg = "blue")
 
     
@@ -40,10 +44,10 @@ button_exit = Button(window,
 # the widgets at respective positions
 # in a table like structure by
 # specifying rows and columns
-label_file_explorer.grid(column = 1, row = 1)
+label_file_explorer.grid(column = 2, row = 1)
 
-button_explore.grid(column = 1, row = 2)
+button_explore.grid(column = 2, row = 2)
 
-button_exit.grid(column = 1,row = 3)
+button_exit.grid(column = 2,row = 3)
 
 window.mainloop()

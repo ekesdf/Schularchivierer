@@ -38,8 +38,6 @@ temp = []
 liste_chars = []
 image_path = "input/test0003.jpeg"
 
-
-
 clear_temp_folder()
 
 image_name = image_path.split("/")[len(image_path.split("/"))-1]
@@ -88,33 +86,49 @@ for region in img.textregions:
 
 print(f"\nThe model has detected {count_chars} Chars in {round(time()-start_char_detection,6)} seconds.\n")
 
+out = open("test.txt","w")
 
 grid = write_char_into_the_grid(liste_chars)
 
-for row in grid:
+###                     ###
+#  Initiate the PDF file  #
+###                     ###
 
-    print(row)
-
-k = 0
-
-
-
-
+pdf = PDF()
+pdf.add_page()
+pdf.set_font("helvetica", size = 15)
 
 
+for col_index  in range(len(grid)):
+
+    
+    col = grid[col_index]
+
+    for row_index in range(len(col)):
+
+        row = col[row_index]
+
+        for char in row:
+
+            if char != " ":
+                
+                pdf.text(row_index*3,col_index*10,char)
+
+pdf.output("output/"+image_name[:-4]+".pdf")
 
 
 
+
+# for row in grid:
+
+#     out.write(str(row)+"\n")
+    
+# out.close()
+
+# k = 0
 
 # text, start_x,start_y  = formatter(liste_chars)
 
-# ###                     ###
-# #  Initiate the PDF file  #
-# ###                     ###
-
-# pdf = PDF()
-# pdf.add_page()
-# pdf.set_font("Arial", size = 15)
 
 # for char in text:
 
@@ -124,6 +138,6 @@ k = 0
 
 #     start_x += 0.1
 
-# pdf.output("output/"+image_name[:-4]+".pdf")
+
 
 # print(f"To translate the Site took {round(time()-translate_start,6)} seconds\n")    
