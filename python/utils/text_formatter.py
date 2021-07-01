@@ -22,9 +22,7 @@ def make_xpos_char_dictionary(liste_x_values,liste_chars):
 
     dictionary = {}
 
-    for index in range(len(liste_x_values)): 
-
-        dictionary[liste_x_values[index]] = liste_chars[index]
+    for index in range(len(liste_x_values)): dictionary[liste_x_values[index]] = liste_chars[index]
 
     return dictionary
 
@@ -50,7 +48,6 @@ def formatter(liste_chars):
 
     liste_groups.append(group)
 
-
     for char in liste_groups[0]: liste_x_values.append(char.normalized_x1)
 
     dictionary = make_xpos_char_dictionary(liste_x_values,liste_groups[0])
@@ -66,7 +63,6 @@ def formatter(liste_chars):
         text += dictionary[x].label
         last_x = x 
 
-    
     start_x = dictionary[liste_x_values[0]].normalized_x1
     start_y = dictionary[liste_x_values[0]].normalized_y1
 

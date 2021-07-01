@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-
 import sys
 from os import environ,chdir
-from time import time
 
 environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 chdir("/home/yolo/Schreibtisch/Schularchivierer")
@@ -12,23 +10,15 @@ sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
 from ai.char_classification.python.classify_chars import make_classification
 from ai.char_localization.python.detect_char import make_char_detection
 from ai.text_region_localization.python.detect_region import make_region_detection
-from python.utils.cut_out_detections import cut_image
-from python.utils.normalize_text_regions import normalize_text_regions 
-from python.utils.calculate_position import calculate_position_of_char_in_the_pdf
-from python.utils.classes import Image,Textregion,Char
-from python.utils.pdf import PDF
+from python.utils.classes import Image,Textregion,Char,PDF
 from python.utils.clear_temp_folder import clear_temp_folder
-# from python.utils.text_formatter import formatter
+from python.utils.cut_out_detections import cut_image
+from python.utils.normalize_text_regions import normalize_text_regions
 from python.testroom.map_detections_in_to_a_grid import write_char_into_the_grid
-
-import numpy as np 
-
+from time import time
 
 
 translate_start = time()
-
-
-
 
 count_chars = 0
 pdf_shape =210,297
@@ -36,20 +26,53 @@ cwd2 = "temp/images/text_regions/"
 cwd3 = "temp/images/chars/"
 temp = []
 liste_chars = []
+
+
+
+
+###                                           ###
+# INPUT_PATH to the image you want to detect on #
+###                                           ###
+
 image_path = "input/test0003.jpeg"
 
+
+###
+# Deletes all the existing folders and files in the temp folder to improve Memory usage
+###
 clear_temp_folder()
 
+
+
+###                                           
+# Converts a file path with the format "home/*/*/*/*/*.jpg in to the corresponding filename with the format "*.jpg"
+##
 image_name = image_path.split("/")[len(image_path.split("/"))-1]
 
+
+###
+# Detects the regions of texts in the image read from the given image_path.
+# Returns a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...] 
+# and the time in seconds it took to predict the regions
+###
 text_regions,time_regions_detection,image_shape = make_region_detection(image_path)
+
 
 print(f"\nThe model has detected {len(text_regions)} text regions in {round(time_regions_detection,6)} seconds\n")
 
-# Detecting all the Textregions and normalize them for the Chardetection and further processing
-# writes the annotation for the corresponding Textregion.
 
+
+### 
+# # returns a list of Image.image objects each of the size 832x832 and witch a symmetrical red border aorund the textregion 
+##
+
+
+###
+# Gets a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...]
+# and cuts the regions out and stores them in the temp folder under temp/images/chars/NAME_OF_THE_REGION
+###
 liste_images = cut_image(text_regions,image_path,"text_region")
+
 dict_scale_factors,dist = normalize_text_regions(liste_images,image_name)
 start_char_detection = time()
 

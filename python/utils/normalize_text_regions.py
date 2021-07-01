@@ -1,5 +1,4 @@
 from PIL import Image
-from os import listdir
 
 cwd = "temp/images/text_regions/"
 
@@ -25,8 +24,7 @@ def normalize_text_regions(liste_images,image_name):
         new_text_region.save(cwd+image_name+"/normalized "+str(index)+".jpg")
 
         index += 1
-        # print((temp_size[1]/832,temp_size[0]/832))
-        # print("\n")
+
         liste_textregions.append((temp_size[0]/832,temp_size[1]/832))
         liste_dist.append((dist_left,dist_top))
     

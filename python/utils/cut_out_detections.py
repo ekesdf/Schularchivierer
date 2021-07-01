@@ -18,7 +18,6 @@ def cut_image(list_detections, image_path, mode):
 
     else: mkdir("temp/images/"+mode+"s/"+img_name)
 
-
     for detection in list_detections:
 
         temp = img.crop(tuple(detection))

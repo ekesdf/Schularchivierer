@@ -16,8 +16,6 @@ def make_text_region_annotations(liste_detections,image_name,mode):
     else: mkdir("temp/annotations/"+mode+"s/"+image_name)
 
     for detection in liste_detections:
-
-        
         
         with open("temp/annotations/"+mode+"s/"+image_name+"/"+str(index)+".txt","w") as file:
 
@@ -27,8 +25,6 @@ def make_text_region_annotations(liste_detections,image_name,mode):
                 scale_x,scale_y = width/832,height/832
                 file.write(f"{detection[0]} {detection[1]} {detection[2]} {detection[3]} {scale_x} {scale_y} {image_name}")
 
-            else: 
-                
-                file.write(f"{detection[0]} {detection[1]} {detection[2]} {detection[3]}")
+            else: file.write(f"{detection[0]} {detection[1]} {detection[2]} {detection[3]}")
                 
         index += 1
