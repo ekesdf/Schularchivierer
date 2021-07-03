@@ -73,6 +73,7 @@ print(f"\nThe model has detected {len(text_regions)} text regions in {round(time
 ###
 liste_images = cut_image(text_regions,image_path,"text_region")
 
+
 dict_scale_factors,dist = normalize_text_regions(liste_images,image_name)
 start_char_detection = time()
 
