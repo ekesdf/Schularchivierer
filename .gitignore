@@ -8,6 +8,8 @@
 *.pyc
 .vscode
 .vscode/*
+python/__pycache__
+python/utils/__pycache__
 ai/char_classification/archive
 ai/char_classification/trained_model
 temp
