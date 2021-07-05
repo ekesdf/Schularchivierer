@@ -37,24 +37,26 @@ liste_chars = []
 image_path = "input/test0003.jpeg"
 
 
-###
-# Deletes all the existing folders and files in the temp folder to improve Memory usage
-###
+###                                              ###
+# Deletes all the existing folders and             #
+# files in the temp folder to improve Memory usage #
+###                                              ###
 clear_temp_folder()
 
 
 
-###                                           
-# Converts a file path with the format "home/*/*/*/*/*.jpg in to the corresponding filename with the format "*.jpg"
-##
+###                                                      ###                                         
+# Converts a file path with the format "home/*/*/*/*/*.jpg #
+# in to the corresponding filename with the format "*.jpg" #
+###                                                      ###
 image_name = image_path.split("/")[len(image_path.split("/"))-1]
 
 
-###
-# Detects the regions of texts in the image read from the given image_path.
-# Returns a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...] 
-# and the time in seconds it took to predict the regions
-###
+###                                                                                  ###
+# Detects the regions of texts in the image read from the given image_path.            #
+# Returns a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...] #
+# and the time in seconds it took to predict the regions                               #
+###                                                                                  ###
 text_regions,time_regions_detection,image_shape = make_region_detection(image_path)
 
 
@@ -62,21 +64,38 @@ print(f"\nThe model has detected {len(text_regions)} text regions in {round(time
 
 
 
-### 
-# # returns a list of Image.image objects each of the size 832x832 and witch a symmetrical red border aorund the textregion 
-##
+###                                                                           ###
+# returns a list of Image.image objects                                         #
+# each of the size 832x832 witch a symmetrical red border around the textregion #
+###                                                                           ###  
 
 
-###
-# Gets a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...]
-# and cuts the regions out and stores them in the temp folder under temp/images/chars/NAME_OF_THE_REGION
-###
+###                                                                                                    ###
+# Gets a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...]                      #
+# and cuts the regions out and stores them in the temp folder under temp/images/chars/NAME_OF_THE_REGION #
+# returns a list of PIL.Image objects of the cut out regions                                             #
+###                                                                                                    ###
 liste_images = cut_image(text_regions,image_path,"text_region")
 
 
+###                                                                                                          ###
+# Gets a list of PIL.image objects with a variable size and pastes each individual image in to a 832x832 image #
+# with a red bacackground. If the give image exeeds the 832 limit in any direction it will be sized to 832.    # 
+# The image is positioned in the center of the other image with its own center.                                #
+###                                                                                                          ###
 dict_scale_factors,dist = normalize_text_regions(liste_images,image_name)
+
+###                                                                      ###
+# Get the current time used for calculating the time,                      #
+# the programme needed to detect and classify all chars in all textregions #
+###                                                                      ###
 start_char_detection = time()
 
+###                                                       ###                             
+# Loops trough the list of regions and greats list with the #
+# corresponding Texregion objects                           #
+# The list has the format [Textregion,Textregion,...]       #
+###                                                       ###
 for index in range(len(text_regions)):
 
     bbox = text_regions[index]
@@ -86,9 +105,16 @@ for index in range(len(text_regions)):
 
     temp.append(Textregion(image_name,region_name,bbox,scale,distance))
 
+
+### ###
+#     #
+### ###
+
 img = Image(image_name,image_shape,temp)
 
-
+### ###
+#     #
+### ###
 for region in img.textregions:
 
     print(region.name)
@@ -111,7 +137,9 @@ for region in img.textregions:
 print(f"\nThe model has detected {count_chars} Chars in {round(time()-start_char_detection,6)} seconds.\n")
 
 out = open("test.txt","w")
-
+### ###
+#     #
+### ###
 grid = write_char_into_the_grid(liste_chars)
 
 ###                     ###
@@ -122,7 +150,9 @@ pdf = PDF()
 pdf.add_page()
 pdf.set_font("helvetica", size = 15)
 
-
+### ###
+#     #
+### ###
 for col_index  in range(len(grid)):
 
     

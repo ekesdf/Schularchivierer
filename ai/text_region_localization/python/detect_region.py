@@ -12,13 +12,14 @@ WIDTH = 832
 HEIGHT = 832
 
 def make_region_detection(image_path):
+	"""
+	Gets a imagepath and returns a list of all Textregions in the given image read from the image path with the time in seconds it took to detect them.\n
+	The list has the following format [[x1, y1, x2, y2],[x1, y1, x2, y2],...]
+	"""
 
-
-	# initialize our lists of detected bounding boxes, confidences, and
-	# class IDs, respectively
+	# initialize our lists of detected bounding boxes and confidences
 	boxes = []
 	confidences = []
-	classIDs = []
 	results = []
 
 	net = cv2.dnn.readNetFromDarknet(CONFIG_FILE, WEIGHTS_FILE)

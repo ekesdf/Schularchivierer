@@ -4,6 +4,12 @@ cwd = "temp/images/text_regions/"
 
 def normalize_text_regions(liste_images,image_name):
 
+    """
+    Gets a list of PIL.image objects with a variable size and pastes each individual image in to a 832x832 image\n
+    with a red bacackground. If the give image exeeds the 832 limit in any direction it will be sized to 832.\n
+    The image is positioned in the center of the other image with its own center.
+    """
+
     index = 0
     liste_textregions = []
     liste_dist = []
