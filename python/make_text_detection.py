@@ -137,6 +137,7 @@ for region in img.textregions:
 print(f"\nThe model has detected {count_chars} Chars in {round(time()-start_char_detection,6)} seconds.\n")
 
 out = open("test.txt","w")
+
 ### ###
 #     #
 ### ###
