@@ -1,11 +1,8 @@
-import functiontrace
-functiontrace.trace()
+
 import sys
 sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
 
-
-
-from python.utils.classes import Grid,Cell
+from python.utils.classes import Grid
 from python.utils.calculate_position import calculate_position_of_char_in_the_pdf
 
 cols = 42
@@ -24,10 +21,7 @@ def write_char_into_the_grid(liste_chars):
 
         char_x = char.normalized_x1+round((char.normalized_x2 - char.normalized_x1) / 2)
         char_y = char.normalized_y1+round((char.normalized_y2 - char.normalized_y1) / 2)
-
-        # char_x = char.normalized_x1
-        # char_y = char.normalized_y1
-
+        
         char_row,char_col = calculate_position_of_char_in_the_pdf((2397,3484),(cols,rows),(char_x,char_y))
 
         grid[char_col-1][char_row-1] = char.label

@@ -195,4 +195,4 @@ pdf.output("output/"+image_name[:-4]+".pdf")
 
 
 
-# print(f"To translate the Site took {round(time()-translate_start,6)} seconds\n")    
+print(f"To translate the Site took {round(time()-translate_start,6)} seconds\n")    
