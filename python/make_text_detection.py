@@ -27,15 +27,11 @@ cwd3 = "temp/images/chars/"
 temp = []
 liste_chars = []
 
-
-
-
 ###                                           ###
 # INPUT_PATH to the image you want to detect on #
 ###                                           ###
 
 image_path = "input/test0003.jpeg"
-
 
 ###                                              ###
 # Deletes all the existing folders and             #
@@ -43,14 +39,11 @@ image_path = "input/test0003.jpeg"
 ###                                              ###
 clear_temp_folder()
 
-
-
 ###                                                      ###                                         
 # Converts a file path with the format "home/*/*/*/*/*.jpg #
 # in to the corresponding filename with the format "*.jpg" #
 ###                                                      ###
 image_name = image_path.split("/")[len(image_path.split("/"))-1]
-
 
 ###                                                                                  ###
 # Detects the regions of texts in the image read from the given image_path.            #
@@ -59,15 +52,8 @@ image_name = image_path.split("/")[len(image_path.split("/"))-1]
 ###                                                                                  ###
 text_regions,time_regions_detection,image_shape = make_region_detection(image_path)
 
-
 print(f"\nThe model has detected {len(text_regions)} text regions in {round(time_regions_detection,6)} seconds\n")
 
-
-
-###                                                                           ###
-# returns a list of Image.image objects                                         #
-# each of the size 832x832 witch a symmetrical red border around the textregion #
-###                                                                           ###  
 
 
 ###                                                                                                    ###
