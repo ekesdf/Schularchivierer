@@ -5,8 +5,8 @@ sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
 from python.utils.classes import Grid
 from python.utils.calculate_position import calculate_position_of_char_in_the_pdf
 
-cols = 42
-rows = 59
+cols = 42*2
+rows = 59*2
 pdf_w = 210
 pdf_h = 297
 

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# access token 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
+
 
 import sys
 from os import environ,chdir
@@ -109,13 +111,7 @@ for region in img.textregions:
 
     liste_chars_cutout = cut_image(chars,cwd2+image_name+"/"+region.name,"char")
 
-    for index in range(len(liste_chars_cutout)):
-
-        char_image = liste_chars_cutout[index]
-        char_bbox = chars[index]
-        label = make_classification(char_image)
-        char = Char(img.name,region.name,region.bbox,region.scale,region.dist,char_bbox,label[0])
-        liste_chars.append(char)
+    liste_chars += make_classification(liste_chars_cutout,img.name,region.name,region.bbox,region.scale,region.dist,chars)
 
     count_chars += len(chars) 
 
