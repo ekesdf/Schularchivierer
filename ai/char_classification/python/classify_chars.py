@@ -22,13 +22,14 @@ class_names = sorted([x.strip() for x in label_file.readlines()])
 trained_model = keras.models.load_model("ai/char_classification/trained_model")
 
 # makes a classification using the trained model
+
 def make_classification(liste_images,img_name,regi_name,regi_bbox,regi_scale,regi_dist,chars):
 
     # load the input image and resizes it 
     # reshape it to the input size of the trained model
 
     liste_images = [img.resize((20, 20), Image.NEAREST) for img in liste_images]
-    liste_images = [np.reshape(img, (1, 20, 20, 3)) for img in liste_images]
+    liste_images = tf.convert_to_tensor([np.reshape(img, (20, 20, 3)) for img in liste_images])
 
     liste_chars = []
 

@@ -1,6 +1,31 @@
 from PIL import Image
+from multiprocessing import Pool
 
 cwd = "temp/images/text_regions/"
+
+
+def normalize(data):
+
+    text_region,image_name,index = data 
+
+    new_text_region = Image.new("RGB",(832,832),"red")
+    temp_size = text_region.size
+
+    if text_region.size[0] > 832 and text_region.size[1] > 832: text_region = text_region.resize((832,832),Image.NEAREST)
+    elif text_region.size[0] > 832: text_region = text_region.resize((832,text_region.size[1]))
+    elif text_region.size[1] > 832: text_region = text_region.resize((text_region.size[0],832))
+
+    dist_left = round((832-text_region.size[0])/2)
+    dist_top  = round((832-text_region.size[1])/2)
+
+    new_text_region.paste(text_region,(dist_left,dist_top))
+
+    new_text_region.save(cwd+image_name+"/normalized "+str(index)+".jpg")
+
+    index += 1
+
+    return (temp_size[0]/832,temp_size[1]/832),(dist_left,dist_top)
+
 
 def normalize_text_regions(liste_images,image_name):
 
@@ -10,28 +35,36 @@ def normalize_text_regions(liste_images,image_name):
     The image is positioned in the center of the other image with its own center.
     """
 
-    index = 0
-    liste_textregions = []
+    # index = 0
+    liste_scale_factors = []
     liste_dist = []
 
-    for text_region in liste_images:
+    pool = Pool(round(len(liste_images)/2)) 
+    results = pool.map(normalize, zip(liste_images,[image_name for _ in range(len(liste_images))], range(len(liste_images))))
 
-        new_text_region = Image.new("RGB",(832,832),"red")
-        temp_size = text_region.size
-        if text_region.size[0] > 832 and text_region.size[1] > 832: text_region = text_region.resize((832,832),Image.NEAREST)
-        elif text_region.size[0] > 832: text_region = text_region.resize((832,text_region.size[1]))
-        elif text_region.size[1] > 832: text_region = text_region.resize((text_region.size[0],832))
+    for result in results:
 
-        dist_left = round((832-text_region.size[0])/2)
-        dist_top  = round((832-text_region.size[1])/2)
+        liste_scale_factors.append(result[0])
+        liste_dist.append(result[1])
 
-        new_text_region.paste(text_region,(dist_left,dist_top))
+    # for text_region in liste_images:
 
-        new_text_region.save(cwd+image_name+"/normalized "+str(index)+".jpg")
+        # new_text_region = Image.new("RGB",(832,832),"red")
+        # temp_size = text_region.size
+        # if text_region.size[0] > 832 and text_region.size[1] > 832: text_region = text_region.resize((832,832),Image.NEAREST)
+        # elif text_region.size[0] > 832: text_region = text_region.resize((832,text_region.size[1]))
+        # elif text_region.size[1] > 832: text_region = text_region.resize((text_region.size[0],832))
 
-        index += 1
+        # dist_left = round((832-text_region.size[0])/2)
+        # dist_top  = round((832-text_region.size[1])/2)
 
-        liste_textregions.append((temp_size[0]/832,temp_size[1]/832))
-        liste_dist.append((dist_left,dist_top))
+        # new_text_region.paste(text_region,(dist_left,dist_top))
+
+        # new_text_region.save(cwd+image_name+"/normalized "+str(index)+".jpg")
+
+        # index += 1
+
+        # liste_textregions.append((temp_size[0]/832,temp_size[1]/832))
+        # liste_dist.append((dist_left,dist_top))
     
-    return liste_textregions,liste_dist
+    return liste_scale_factors,liste_dist

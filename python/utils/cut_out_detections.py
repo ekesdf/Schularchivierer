@@ -2,7 +2,18 @@ from PIL.Image import open as open_image
 from os import mkdir
 from shutil import rmtree
 from os.path import exists
+from multiprocessing import Pool
 
+
+def cut(data):
+
+    detection,img,mode,img_name,index = data
+
+    temp = img.crop(tuple(detection))
+    temp.save("temp/images/"+mode+"s/"+img_name+"/"+str(index)+".jpg")
+    index += 1
+
+    return temp
 
 def cut_image(list_detections, image_path, mode):
 
@@ -14,7 +25,6 @@ def cut_image(list_detections, image_path, mode):
 
     img = open_image(image_path)
     img_name = image_path.split("/")[len(image_path.split("/"))-1]
-    index = 0
     liste_images = []
 
     if exists("temp/images/"+mode+"s/"+img_name):
@@ -24,12 +34,21 @@ def cut_image(list_detections, image_path, mode):
 
     else: mkdir("temp/images/"+mode+"s/"+img_name)
 
-    for detection in list_detections:
+    pool = Pool(round(len(list_detections)/2))
 
-        temp = img.crop(tuple(detection))
-        liste_images.append(temp)
-        temp.save("temp/images/"+mode+"s/"+img_name+"/"+str(index)+".jpg")
-        index += 1
+    liste_images = pool.map(cut,zip(list_detections,
+                                [img for _ in range(len(list_detections))],
+                                [mode for _ in range(len(list_detections))],
+                                [img_name for _ in range(len(list_detections))],
+                                [index for index in range(len(list_detections))]
+                                ))
+
+    # for detection in list_detections:
+
+    #     temp = img.crop(tuple(detection))
+    #     liste_images.append(temp)
+    #     temp.save("temp/images/"+mode+"s/"+img_name+"/"+str(index)+".jpg")
+    #     index += 1
 
     return liste_images
     

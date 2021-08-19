@@ -5,6 +5,7 @@
 import sys
 from os import environ,chdir
 
+
 environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 chdir("/home/yolo/Schreibtisch/Schularchivierer")
 sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
@@ -33,7 +34,7 @@ liste_chars = []
 # INPUT_PATH to the image you want to detect on #
 ###                                           ###
 
-image_path = "input/test0003.jpeg"
+image_path = "input/test.jpg"
 
 ###                                              ###
 # Deletes all the existing folders and             #
