@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# access token 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
 
 
 import sys
