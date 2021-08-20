@@ -13,15 +13,14 @@ sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
 from ai.char_classification.python.classify_chars import make_classification
 from ai.char_localization.python.detect_char import make_char_detection
 from ai.text_region_localization.python.detect_region import make_region_detection
-from python.utils.classes import Image,Textregion,Char,PDF
+from python.utils.classes import Image,Textregion,PDF
 from python.utils.clear_temp_folder import clear_temp_folder
 from python.utils.cut_out_detections import cut_image
 from python.utils.normalize_text_regions import normalize_text_regions
 from python.testroom.map_detections_in_to_a_grid import write_char_into_the_grid
-from time import time
+from time import time,process_time
 
 
-translate_start = time()
 
 count_chars = 0
 pdf_shape =210,297
@@ -178,4 +177,4 @@ pdf.output("output/"+image_name[:-4]+".pdf")
 
 
 
-print(f"To translate the Site took {round(time()-translate_start,6)} seconds\n")    
+print(f"To translate the Site took {process_time()} seconds\n")    
