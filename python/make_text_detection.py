@@ -27,7 +27,6 @@ from python.utils.normalize_text_regions import normalize_text_regions
 from python.testroom.map_detections_in_to_a_grid import write_char_into_the_grid
 from time import time,process_time
 
-print(process_time())
 
 count_chars = 0
 pdf_shape =210,297
@@ -47,7 +46,7 @@ image_path = "input/test.jpg"
 # files in the temp folder to improve Memory usage #
 ###                                              ###
 clear_temp_folder()
-print(process_time())
+
 ###                                                      ###                                         
 # Converts a file path with the format "home/*/*/*/*/*.jpg #
 # in to the corresponding filename with the format "*.jpg" #
@@ -62,7 +61,7 @@ image_name = image_path.split("/")[len(image_path.split("/"))-1]
 # and the time in seconds it took to predict the regions                               #
 ###                                                                                  ###
 text_regions,time_regions_detection,image_shape = make_region_detection(image_path)
-print(process_time())
+
 
 print(f"\nThe model has detected {len(text_regions)} text regions in {round(time_regions_detection,6)} seconds\n")
 
@@ -78,7 +77,6 @@ start_char_detection = time()
 # returns a list of PIL.Image objects of the cut out regions                                             #
 ###                                                                                                    ###
 liste_images = cut_image(text_regions,image_path,"text_region")
-
 
 ###                                                                                                          ###
 # Gets a list of PIL.image objects with a variable size and pastes each individual image in to a 832x832 image #
@@ -115,7 +113,7 @@ img = Image(image_name,image_shape,temp)
 ### ###
 for region in img.textregions:
 
-    print(region.name)
+    # print(region.name)
         
     chars,time_chars_detection = make_char_detection(cwd2+image_name+"/"+region.name)
 

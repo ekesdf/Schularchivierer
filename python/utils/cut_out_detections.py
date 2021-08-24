@@ -30,9 +30,7 @@ def cut_image(list_detections, image_path, mode):
     if exists("temp/images/"+mode+"s/"+img_name):
 
         rmtree("temp/images/"+mode+"s/"+img_name)
-        mkdir("temp/images/"+mode+"s/"+img_name)
-
-    else: mkdir("temp/images/"+mode+"s/"+img_name)
+    mkdir("temp/images/"+mode+"s/"+img_name)
 
     pool = Pool(round(len(list_detections)/2))
 

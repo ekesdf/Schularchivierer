@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL.Image import new as new_Image, NEAREST
 from multiprocessing import Pool
 
 cwd = "temp/images/text_regions/"
@@ -8,10 +8,10 @@ def normalize(data):
 
     text_region,image_name,index = data 
 
-    new_text_region = Image.new("RGB",(832,832),"red")
+    new_text_region = new_Image("RGB",(832,832),"red")
     temp_size = text_region.size
 
-    if text_region.size[0] > 832 and text_region.size[1] > 832: text_region = text_region.resize((832,832),Image.NEAREST)
+    if text_region.size[0] > 832 and text_region.size[1] > 832: text_region = text_region.resize((832,832),NEAREST)
     elif text_region.size[0] > 832: text_region = text_region.resize((832,text_region.size[1]))
     elif text_region.size[1] > 832: text_region = text_region.resize((text_region.size[0],832))
 
