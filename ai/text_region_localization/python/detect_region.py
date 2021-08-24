@@ -4,7 +4,6 @@ from cv2 import imread as cv2_imread
 from cv2 import dnn
 
 
-
 CONFIG_FILE  = 'ai/text_region_localization/trained_model/yolov4-leaky-416.cfg'
 WEIGHTS_FILE = 'ai/text_region_localization/trained_model/yolov4-leaky-416_last.weights'
 CONFIDENCE_THRESHOLD = 0.2
@@ -32,16 +31,12 @@ def make_region_detection(image_path):
 	ln = net.getLayerNames()
 	ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
-
 	blob = dnn.blobFromImage(image, 1 / 255.0, (WIDTH, HEIGHT),swapRB=True, crop=False)
 
 	net.setInput(blob)
 	start = time()
 	layerOutputs = net.forward(ln)
 	end = time()
-
-
-	# print("[INFO] YOLO took {:.6f} seconds".format(end - start))
 
 	# loop over each of the layer outputs
 	for output in layerOutputs:
@@ -94,6 +89,5 @@ def make_region_detection(image_path):
 
 			# Array format is: x1, y1, x2, y2
 			results.append([x, y,x+w,y+h])
-
 
 	return results,end-start,(W,H)

@@ -54,12 +54,11 @@ clear_temp_folder()
 image_name = image_path.split("/")[len(image_path.split("/"))-1]
 
 
-
 ###                                                                                  ###
 # Detects the regions of texts in the image read from the given image_path.            #
 # Returns a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...] #
 # and the time in seconds it took to predict the regions                               #
-###                                                                                  ###
+###                                                                                  ###                                                                              
 text_regions,time_regions_detection,image_shape = make_region_detection(image_path)
 
 
@@ -75,7 +74,7 @@ start_char_detection = time()
 # Gets a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...]                      #
 # and cuts the regions out and stores them in the temp folder under temp/images/chars/NAME_OF_THE_REGION #
 # returns a list of PIL.Image objects of the cut out regions                                             #
-###                                                                                                    ###
+###                                                                                                    ###                                                                     
 liste_images = cut_image(text_regions,image_path,"text_region")
 
 ###                                                                                                          ###
@@ -100,7 +99,6 @@ for index in range(len(text_regions)):
     region_name = str("normalized "+str(index)+".jpg")
 
     temp.append(Textregion(image_name,region_name,bbox,scale,distance))
-
 
 ### ###
 #     #
