@@ -23,9 +23,9 @@ def make_region_detection(image_path):
 	confidences = []
 	results = []
 
-	net = cv2.dnn.readNetFromDarknet(CONFIG_FILE, WEIGHTS_FILE)
+	net = dnn.readNetFromDarknet(CONFIG_FILE, WEIGHTS_FILE)
 
-	image = cv2.imread(image_path)
+	image = cv2_imread(image_path)
 	(H, W) = image.shape[:2]
 
 	# determine only the *output* layer names that we need from YOLO
@@ -33,12 +33,12 @@ def make_region_detection(image_path):
 	ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
 
-	blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (WIDTH, HEIGHT),swapRB=True, crop=False)
+	blob = dnn.blobFromImage(image, 1 / 255.0, (WIDTH, HEIGHT),swapRB=True, crop=False)
 
 	net.setInput(blob)
-	start = time.time()
+	start = time()
 	layerOutputs = net.forward(ln)
-	end = time.time()
+	end = time()
 
 
 	# print("[INFO] YOLO took {:.6f} seconds".format(end - start))
@@ -52,7 +52,7 @@ def make_region_detection(image_path):
 			# extract the class ID and confidence (i.e., probability) of
 			# the current object detection
 			scores = detection[5:]
-			classID = np.argmax(scores)
+			classID = np_argmax(scores)
 			confidence = scores[classID]
 
 			# filter out weak predictions by ensuring the detected
@@ -63,7 +63,7 @@ def make_region_detection(image_path):
 				# size of the image, keeping in mind that YOLO actually
 				# returns the center (x, y)-coordinates of the bounding
 				# box followed by the boxes' width and height
-				box = detection[0:4] * np.array([W, H, W, H])
+				box = detection[0:4] * np_array([W, H, W, H])
 				(centerX, centerY, width, height) = box.astype("int")
 
 				# use the center (x, y)-coordinates to derive the top and
@@ -79,7 +79,7 @@ def make_region_detection(image_path):
 
 	# apply non-maxima suppression to suppress weak, overlapping bounding
 	# boxes
-	idxs = cv2.dnn.NMSBoxes(boxes, confidences, CONFIDENCE_THRESHOLD,0.2)
+	idxs = dnn.NMSBoxes(boxes, confidences, CONFIDENCE_THRESHOLD,0.2)
 	
 
 	# ensure at least one detection exists

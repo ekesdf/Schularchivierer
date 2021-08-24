@@ -143,22 +143,22 @@ pdf.set_font("helvetica", size = 15)
 ### ###
 #     #
 ### ###
-for col_index  in range(len(grid)):
+# for col_index  in range(len(grid)):
 
     
-    col = grid[col_index]
+#     col = grid[col_index]
 
-    for row_index in range(len(col)):
+#     for row_index in range(len(col)):
 
-        row = col[row_index]
+#         row = col[row_index]
 
-        for char in row:
+#         for char in row:
 
-            if char != " ":
+#             if char != " ":
                 
-                pdf.text(row_index*3,col_index*10,char)
+#                 pdf.text(row_index*3,col_index*10,char)
 
-pdf.output("output/"+image_name[:-4]+".pdf")
+# pdf.output("output/"+image_name[:-4]+".pdf")
 
 
 
