@@ -8,28 +8,25 @@ grid = Grid(30,50)
 
 def put_line(grid,text,start_col,row):
     
-    if start_col +len(text) > len(grid[0]): return grid
-
-    else: 
+    if start_col + len(text) <= len(grid[0]): 
         
         for char_index in range(len(text)): grid[row-1][start_col-1+char_index] = text[char_index]
 
-        return grid
+
+    if start_col +len(text) > len(grid[0]): return grid
 
 
 
 def make_xpos_char_dictionary(liste_x_values,liste_chars):
 
-    dictionary = {}
-
-    for index in range(len(liste_x_values)): dictionary[liste_x_values[index]] = liste_chars[index]
-
-    return dictionary
+    return {
+        liste_x_values[index]: liste_chars[index]
+        for index in range(len(liste_x_values))
+    }
 
 def formatter(liste_chars):
 
     liste_groups = []
-    liste_x_values = []
     group = []
 
     text = ""
@@ -41,15 +38,12 @@ def formatter(liste_chars):
             
             liste_groups.append(group)
             group = []
-            group.append(char)
             old = char.textregion
 
-        else: group.append(char)
-
+        group.append(char)
     liste_groups.append(group)
 
-    for char in liste_groups[0]: liste_x_values.append(char.normalized_x1)
-
+    liste_x_values = [char.normalized_x1 for char in liste_groups[0]]
     dictionary = make_xpos_char_dictionary(liste_x_values,liste_groups[0])
 
     liste_x_values = sorted(liste_x_values)
