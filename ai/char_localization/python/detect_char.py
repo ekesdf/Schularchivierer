@@ -1,8 +1,7 @@
-import numpy as np
-import time
-import cv2
-
-
+from numpy import array as np_array, argmax as np_argmax 
+from time import time
+from cv2 import imread as cv2_imread
+from cv2 import dnn
 
 CONFIG_FILE  = "ai/char_localization/trained_model/detect_v2.cfg"
 WEIGHTS_FILE = "ai/char_localization/trained_model/detect_v2.weights"
@@ -10,7 +9,7 @@ CONFIDENCE_THRESHOLD = 0.8
 WIDTH = 832
 HEIGHT = 832
 
-net = cv2.dnn.readNetFromDarknet(CONFIG_FILE, WEIGHTS_FILE)
+net = dnn.readNetFromDarknet(CONFIG_FILE, WEIGHTS_FILE)
 
 def make_char_detection(image_path):
 
@@ -22,7 +21,7 @@ def make_char_detection(image_path):
 	results = []
 	
 
-	image = cv2.imread(image_path)
+	image = cv2_imread(image_path)
 	(H, W) = image.shape[:2]
 
 	# determine only the *output* layer names that we need from YOLO
@@ -30,12 +29,12 @@ def make_char_detection(image_path):
 	ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
 
-	blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (WIDTH, HEIGHT),swapRB=True, crop=False)
+	blob = dnn.blobFromImage(image, 1 / 255.0, (WIDTH, HEIGHT),swapRB=True, crop=False)
 
 	net.setInput(blob)
-	start = time.time()
+	start = time()
 	layerOutputs = net.forward(ln)
-	end = time.time()
+	end = time()
 
 
 	# loop over each of the layer outputs
@@ -47,7 +46,7 @@ def make_char_detection(image_path):
 			# extract the class ID and confidence (i.e., probability) of
 			# the current object detection
 			scores = detection[5:]
-			classID = np.argmax(scores)
+			classID = np_argmax(scores)
 			confidence = scores[classID]
 
 			# filter out weak predictions by ensuring the detected
@@ -58,7 +57,7 @@ def make_char_detection(image_path):
 				# size of the image, keeping in mind that YOLO actually
 				# returns the center (x, y)-coordinates of the bounding
 				# box followed by the boxes' width and height
-				box = detection[0:4] * np.array([W, H, W, H])
+				box = detection[0:4] * np_array([W, H, W, H])
 				(centerX, centerY, width, height) = box.astype("int")
 
 				# use the center (x, y)-coordinates to derive the top and
@@ -74,7 +73,7 @@ def make_char_detection(image_path):
 
 	# apply non-maxima suppression to suppress weak, overlapping bounding
 	# boxes
-	idxs = cv2.dnn.NMSBoxes(boxes, confidences, CONFIDENCE_THRESHOLD,0.2)
+	idxs = dnn.NMSBoxes(boxes, confidences, CONFIDENCE_THRESHOLD,0.2)
 	
 
 	# ensure at least one detection exists
@@ -89,9 +88,9 @@ def make_char_detection(image_path):
 
 			# Array format is: x1, y1, x2, y2
 			results.append([x, y,x+w,y+h])
-			cv2.rectangle(image, (x, y), (x + w, y + h), (255,255,0), 2)
+	# 		cv2.rectangle(image, (x, y), (x + w, y + h), (255,255,0), 2)
 
 
-	cv2.imwrite("temp/test.jpg", image)
+	# cv2.imwrite("temp/test.jpg", image)
 
 	return results,end-start

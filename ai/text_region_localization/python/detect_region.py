@@ -1,6 +1,7 @@
-import numpy as np
-import time
-import cv2
+from numpy import array as np_array, argmax as np_argmax 
+from time import time
+from cv2 import imread as cv2_imread
+from cv2 import dnn
 
 
 

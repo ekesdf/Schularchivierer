@@ -9,6 +9,14 @@ environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 chdir("/home/yolo/Schreibtisch/Schularchivierer")
 sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
 
+from tensorflow import config 
+
+gpus = config.list_physical_devices('GPU')
+config.experimental.set_memory_growth(gpus[0], True)
+config.experimental.set_memory_growth(gpus[1], True)
+
+
+
 from ai.char_classification.python.classify_chars import make_classification
 from ai.char_localization.python.detect_char import make_char_detection
 from ai.text_region_localization.python.detect_region import make_region_detection
