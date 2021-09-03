@@ -1,7 +1,5 @@
 from numpy import interp
 
-# 297x210
-290 * 2 = 580
 
 def interpolating_pos(inp_y, inp_x):
     

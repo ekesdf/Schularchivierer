@@ -14,3 +14,4 @@ python/utils/__pycache__
 ai/char_classification/archive
 ai/char_classification/trained_model
 temp
+*.cpython-38.pyc
