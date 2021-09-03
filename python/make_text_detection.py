@@ -110,11 +110,9 @@ img = Image(image_name,image_shape,temp)
 #     #
 ### ###
 for region in img.textregions:
-
-    # print(region.name)
-        
+     
     chars,time_chars_detection = make_char_detection(cwd2+image_name+"/"+region.name)
-
+    
     liste_chars_cutout = cut_image(chars,cwd2+image_name+"/"+region.name,"char")
 
     liste_chars += make_classification(liste_chars_cutout,img.name,region.name,region.bbox,region.scale,region.dist,chars)
