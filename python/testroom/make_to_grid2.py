@@ -1,36 +1,27 @@
 from numpy import interp
 
 
-# Test locations of chars detected in a Image.
-
-# [663, 183, 704, 254]
-# [176, 385, 220, 430]
-# [449, 527, 515, 610]
-# [396, 182, 449, 251]
-# [142, 251, 192, 309]
-# [436, 581, 489, 623]
-# [271, 382, 318, 442]
-# [520, 452, 557, 486]
-# [621, 337, 665, 403]
-# [530, 332, 567, 401]
-
-# 3508 x 2480
-
-
 def interpolating_pos(inp_y, inp_x):
-    
     '''Interpolates the given Pos of the char in the image to the actual pos in the PDF'''
 
-    out_y = interp(inp_y,[0,3484],[1,60])
-    out_x = interp(inp_x,[0,2397],[1,71])
-    out_y -= 0.5
-    out_x -= 0.5 
-    out_y = round(out_y)
-    out_x = round(out_x)
-    
+    out_y = interp(inp_y, [0, 3484], [1, 580]) 
+    out_x = interp(inp_x, [0, 2397], [1, 210]) 
+    out_y = interp(out_y, [0, 400 ], [1, 69 ]) 
+    out_x = interp(out_x, [0, 210 ], [1, 49 ]) 
+
+    out_y = int(out_y)
+    out_x = int(out_x)
+
     return out_y, out_x
-    
-pdf_y,pdf_x = interpolating_pos(663, 183)
 
+def write_chars_into_txt(grid):
 
+    out = open('test.txt', 'w')
 
+    for index, row in enumerate(grid):
+
+        row_str = "".join(" " if col == "" else col for col in row)
+
+        if index <= len(grid): out.write(row_str+"\n")
+
+        else: out.write(row_str)

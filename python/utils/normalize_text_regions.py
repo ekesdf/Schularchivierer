@@ -39,7 +39,10 @@ def normalize_text_regions(liste_images,image_name):
     liste_scale_factors = []
     liste_dist = []
 
-    pool = Pool(round(len(liste_images)/2)) 
+
+    pool = Pool(round(len(liste_images)+0.5/2)) 
+
+
     results = pool.map(normalize, zip(liste_images,[image_name for _ in range(len(liste_images))], range(len(liste_images))))
 
     for result in results:

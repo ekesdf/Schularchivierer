@@ -3,17 +3,13 @@ import sys
 sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
 
 from python.utils.classes import Grid
-from python.utils.calculate_position import calculate_position_of_char_in_the_pdf
+from python.testroom.make_to_grid2 import interpolating_pos
 
-cols = 42*2
-rows = 59*2
-pdf_w = 210
-pdf_h = 297
+cols = 70
+rows = 50
 
-cell_w = pdf_w / cols
-cell_h = pdf_h / rows
 
-grid = Grid(rows=rows, cols=cols,cell_w=cell_w,cell_h=cell_h).make_grid()
+grid = [[" " for _ in range(cols)] for _ in range(rows) ]
 
 def write_char_into_the_grid(liste_chars):
 
@@ -22,9 +18,9 @@ def write_char_into_the_grid(liste_chars):
         char_x = char.normalized_x1+round((char.normalized_x2 - char.normalized_x1) / 2)
         char_y = char.normalized_y1+round((char.normalized_y2 - char.normalized_y1) / 2)
         
-        char_row,char_col = calculate_position_of_char_in_the_pdf((2397,3484),(cols,rows),(char_x,char_y))
-
-        grid[char_col-1][char_row-1] = char.label
+        char_row,char_col = interpolating_pos(char_x,char_y)
+        # print(char_row,char_col)
+        grid[char_col][char_row] = char.label
 
     return grid
 

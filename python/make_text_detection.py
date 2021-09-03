@@ -2,14 +2,13 @@
 
 
 import sys
-from os import environ,chdir
-
+from os import chdir, environ
 
 environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 chdir("/home/yolo/Schreibtisch/Schularchivierer")
 sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
 
-from tensorflow import config 
+from tensorflow import config
 
 gpus = config.list_physical_devices('GPU')
 config.experimental.set_memory_growth(gpus[0], True)
@@ -17,16 +16,17 @@ config.experimental.set_memory_growth(gpus[1], True)
 
 
 
+from time import process_time, time
+
 from ai.char_classification.python.classify_chars import make_classification
 from ai.char_localization.python.detect_char import make_char_detection
 from ai.text_region_localization.python.detect_region import make_region_detection
-from python.utils.classes import Image,Textregion,PDF
+from python.testroom.make_to_grid2 import write_chars_into_txt
+from python.testroom.map_detections_in_to_a_grid import write_char_into_the_grid
+from python.utils.classes import PDF, Image, Textregion
 from python.utils.clear_temp_folder import clear_temp_folder
 from python.utils.cut_out_detections import cut_image
 from python.utils.normalize_text_regions import normalize_text_regions
-from python.testroom.map_detections_in_to_a_grid import write_char_into_the_grid
-from time import time,process_time
-
 
 count_chars = 0
 pdf_shape =210,297
@@ -106,13 +106,17 @@ for index in range(len(text_regions)):
 
 img = Image(image_name,image_shape,temp)
 
-### ###
-#     #
-### ###
+###        ###
+#  sdfsdfs   #
+###        ###
+# out = open("chars.txt","w")
+
 for region in img.textregions:
      
     chars,time_chars_detection = make_char_detection(cwd2+image_name+"/"+region.name)
     
+    # out.write(str(chars)+"\n")
+
     liste_chars_cutout = cut_image(chars,cwd2+image_name+"/"+region.name,"char")
 
     liste_chars += make_classification(liste_chars_cutout,img.name,region.name,region.bbox,region.scale,region.dist,chars)
@@ -122,63 +126,12 @@ for region in img.textregions:
 
 print(f"\nThe model has detected {count_chars} Chars in {round(time()-start_char_detection,6)} seconds.\n")
 
-out = open("test.txt","w")
-
 ### ###
 #     #
 ### ###
-# grid = write_char_into_the_grid(liste_chars)
-
-# ###                     ###
-# #  Initiate the PDF file  #
-# ###                     ###
-
-# pdf = PDF()
-# pdf.add_page()
-# pdf.set_font("helvetica", size = 15)
-
-### ###
-#     #
-### ###
-# for col_index  in range(len(grid)):
-
-    
-#     col = grid[col_index]
-
-#     for row_index in range(len(col)):
-
-#         row = col[row_index]
-
-#         for char in row:
-
-#             if char != " ":
-                
-#                 pdf.text(row_index*3,col_index*10,char)
-
-# pdf.output("output/"+image_name[:-4]+".pdf")
+grid = write_char_into_the_grid(liste_chars)
 
 
-
-
-# for row in grid:
-
-#     out.write(str(row)+"\n")
-    
-# out.close()
-
-# k = 0
-
-# text, start_x,start_y  = formatter(liste_chars)
-
-
-# for char in text:
-
-#     corrected_x,current_y = calculate_position_of_char_in_the_pdf(image_shape,pdf_shape,(start_x,start_y))
-
-#     pdf.cell(corrected_x, current_y,txt = char )
-
-#     start_x += 0.1
-
-
+write_chars_into_txt(grid)
 
 print(f"To translate the Site took {process_time()} seconds\n")    

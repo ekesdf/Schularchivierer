@@ -33,12 +33,12 @@ def make_char_detection(image_path):
 
 	net.setInput(blob)
 	start = time()
-	layerOutputs = net.forward(ln)
+	layeroutputs = net.forward(ln)
 	end = time()
 
 
 	# loop over each of the layer outputs
-	for output in layerOutputs:
+	for output in layeroutputs:
 		
 		# loop over each of the detections
 		for detection in output:
@@ -46,8 +46,8 @@ def make_char_detection(image_path):
 			# extract the class ID and confidence (i.e., probability) of
 			# the current object detection
 			scores = detection[5:]
-			classID = np_argmax(scores)
-			confidence = scores[classID]
+			class_id = np_argmax(scores)
+			confidence = scores[class_id]
 
 			# filter out weak predictions by ensuring the detected
 			# probability is greater than the minimum probability
@@ -58,12 +58,12 @@ def make_char_detection(image_path):
 				# returns the center (x, y)-coordinates of the bounding
 				# box followed by the boxes' width and height
 				box = detection[0:4] * np_array([W, H, W, H])
-				(centerX, centerY, width, height) = box.astype("int")
+				(center_x, center_y, width, height) = box.astype("int")
 
 				# use the center (x, y)-coordinates to derive the top and
 				# and left corner of the bounding box
-				x = int(centerX - (width / 2))
-				y = int(centerY - (height / 2))
+				x = int(center_x - (width / 2))
+				y = int(center_y - (height / 2))
 
 				# update our list of bounding box coordinates, confidences,
 				# and class IDs

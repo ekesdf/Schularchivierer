@@ -4,13 +4,16 @@ from shutil import rmtree
 from os.path import exists
 from multiprocessing import Pool
 
+path = "temp/images/"
+
 
 def cut(data):
 
     detection,img,mode,img_name,index = data
 
     temp = img.crop(tuple(detection))
-    temp.save("temp/images/"+mode+"s/"+img_name+"/"+str(index)+".jpg")
+
+    temp.save(path+mode+"s/"+img_name+"/"+str(index)+".jpg")
     index += 1
 
     return temp
@@ -27,26 +30,23 @@ def cut_image(list_detections, image_path, mode):
     img_name = image_path.split("/")[len(image_path.split("/"))-1]
     liste_images = []
 
-    if exists("temp/images/"+mode+"s/"+img_name):
+    if exists(path+mode+"s/"+img_name):
 
-        rmtree("temp/images/"+mode+"s/"+img_name)
-    mkdir("temp/images/"+mode+"s/"+img_name)
+        rmtree(path+mode+"s/"+img_name)
+    mkdir(path+mode+"s/"+img_name)
 
-    pool = Pool(round(len(list_detections)/2))
+  
+    if len(list_detections) > 0:
+    
+        pool = Pool(round((len(list_detections)+0.5)/2))
 
-    liste_images = pool.map(cut,zip(list_detections,
-                                [img for _ in range(len(list_detections))],
-                                [mode for _ in range(len(list_detections))],
-                                [img_name for _ in range(len(list_detections))],
-                                [index for index in range(len(list_detections))]
-                                ))
+        liste_images = pool.map(cut,zip(list_detections,
+                                    [img for _ in range(len(list_detections))],
+                                    [mode for _ in range(len(list_detections))],
+                                    [img_name for _ in range(len(list_detections))],
+                                    [index for index in range(len(list_detections))]
+                                    ))
 
-    # for detection in list_detections:
-
-    #     temp = img.crop(tuple(detection))
-    #     liste_images.append(temp)
-    #     temp.save("temp/images/"+mode+"s/"+img_name+"/"+str(index)+".jpg")
-    #     index += 1
-
+    
     return liste_images
     

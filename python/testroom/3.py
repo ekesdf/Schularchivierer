@@ -11,10 +11,10 @@ pdf = FPDF(unit="pt",format="A4")
 # Add a page
 pdf.add_page()
 pdf.set_margins(0.5,1.0,0.5)
-pdf.set_auto_page_break(False)
+# pdf.set_auto_page_break(False)
 
 # set style and size of font
-# that you want in the pdf
+# that you want in the pdf			
 pdf.set_font("Courier", size = 14)
 
 # open the text file in read mode
