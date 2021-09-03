@@ -6,16 +6,13 @@ from PIL.Image import open as open_image
 
 def make_text_region_annotations(liste_detections,image_name,mode):
 
-    index = 0
-
     if exists("temp/annotations/"+mode+"s/"+image_name):
 
         rmtree("temp/annotations/"+mode+"s/"+image_name)
-        mkdir("temp/annotations/"+mode+"s/"+image_name)
     
-    else: mkdir("temp/annotations/"+mode+"s/"+image_name)
+    mkdir("temp/annotations/"+mode+"s/"+image_name)
 
-    for detection in liste_detections:
+    for index, detection in enumerate(liste_detections):
         
         with open("temp/annotations/"+mode+"s/"+image_name+"/"+str(index)+".txt","w") as file:
 
@@ -26,5 +23,3 @@ def make_text_region_annotations(liste_detections,image_name,mode):
                 file.write(f"{detection[0]} {detection[1]} {detection[2]} {detection[3]} {scale_x} {scale_y} {image_name}")
 
             else: file.write(f"{detection[0]} {detection[1]} {detection[2]} {detection[3]}")
-                
-        index += 1

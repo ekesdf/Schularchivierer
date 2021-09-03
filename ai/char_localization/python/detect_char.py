@@ -6,8 +6,8 @@ from cv2 import dnn
 CONFIG_FILE  = "ai/char_localization/trained_model/detect_v2.cfg"
 WEIGHTS_FILE = "ai/char_localization/trained_model/detect_v2.weights"
 CONFIDENCE_THRESHOLD = 0.8
-WIDTH = 832
-HEIGHT = 832
+WIDTH = 416
+HEIGHT = 416
 
 net = dnn.readNetFromDarknet(CONFIG_FILE, WEIGHTS_FILE)
 

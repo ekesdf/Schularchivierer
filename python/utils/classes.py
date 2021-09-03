@@ -54,24 +54,23 @@ class Char:
             self.normalized_x2 = ((char_bbox[2]-dist[0])*self.scale[0])+textregion_bbox[0]
             self.normalized_y2 = char_bbox[3]-dist[1]+textregion_bbox[1]
 
-        elif self.scale[0] <= 1.0 and self.scale[1] > 1.0:
+        elif self.scale[0] <= 1.0:
 
             self.normalized_x1 = char_bbox[0]-dist[0]+textregion_bbox[0]
             self.normalized_y1 = ((char_bbox[1]-dist[1])*self.scale[1])+textregion_bbox[1]
             self.normalized_x2 = char_bbox[2]-dist[0]+textregion_bbox[0]
             self.normalized_y2 = ((char_bbox[3]-dist[1])*self.scale[1])+textregion_bbox[1]
 
-        elif self.scale[0] > 1.0 and self.scale[1] > 1.0:
-
+        else:
             self.normalized_x1 = ((char_bbox[0]-dist[0])*self.scale[0])+textregion_bbox[0]
             self.normalized_y1 = ((char_bbox[1]-dist[1])*self.scale[1])+textregion_bbox[1]
             self.normalized_x2 = ((char_bbox[2]-dist[0])*self.scale[0])+textregion_bbox[0]
             self.normalized_y2 = ((char_bbox[3]-dist[1])*self.scale[1])+textregion_bbox[1]
 
-        if self.normalized_x1 < 0: self.normalized_x1 = 0
-        if self.normalized_y1 < 0: self.normalized_y1 = 0
-        if self.normalized_x2 < 0: self.normalized_x2 = 0
-        if self.normalized_y2 < 0: self.normalized_y2 = 0
+        self.normalized_x1 = max(self.normalized_x1, 0)
+        self.normalized_y1 = max(self.normalized_y1, 0)
+        self.normalized_x2 = max(self.normalized_x2, 0)
+        self.normalized_y2 = max(self.normalized_y2, 0)
 
         self.bbox = [self.normalized_x1, self.normalized_y1, self.normalized_x2, self.normalized_y2]
 
@@ -87,12 +86,10 @@ class Grid:
 
         for _ in range(self.number_rows):
             
-            row = []
-        
-            for _ in range(self.number_cols): row.append(" ")
+            row = [" " for _ in range(self.number_cols)]
 
             self.grid.append(row)
-        
+
         return self.grid
 
 class Cell:
