@@ -28,7 +28,6 @@ def cut(data):
     temp = img.crop(tuple(detection))
 
     temp.save(path+mode+"s/"+img_name+"/"+str(index)+".jpg")
-    index += 1
 
     return temp
 
@@ -48,9 +47,8 @@ def cut_image(list_detections, image_path, mode):
 
     mkdir(path+mode+"s/"+img_name)
 
-  
     if len(list_detections) > 0:
-    
+
         pool = Pool(round((len(list_detections)+0.5)/2))
 
         liste_images = pool.map(cut,zip(list_detections,
@@ -59,19 +57,19 @@ def cut_image(list_detections, image_path, mode):
                                     [img_name for _ in range(len(list_detections))],
                                     [index for index in range(len(list_detections))]
                                     ))
-    
+
     return liste_images
 
 
 
 def interpolating_pos(inp_y, inp_x):
-    
+
     '''Interpolates the given Pos of the char in the image to the actual pos in the PDF'''
 
-    out_y = interp(inp_y, [0, 3484], [1, 580]) 
-    out_x = interp(inp_x, [0, 2397], [1, 210]) 
-    out_y = interp(out_y, [0, 400 ], [1, 69 ]) 
-    out_x = interp(out_x, [0, 210 ], [1, 49 ]) 
+    out_y = interp(inp_y, [0, 3484], [1, 580])
+    out_x = interp(inp_x, [0, 2397], [1, 210])
+    out_y = interp(out_y, [0, 400 ], [1, 69 ])
+    out_x = interp(out_x, [0, 210 ], [1, 49 ])
 
     out_y = int(out_y)
     out_x = int(out_x)
@@ -84,12 +82,12 @@ def write_char_into_the_grid(liste_chars):
 
         char_x = char.normalized_x1+round((char.normalized_x2 - char.normalized_x1) / 2)
         char_y = char.normalized_y1+round((char.normalized_y2 - char.normalized_y1) / 2)
-        
+
         char_row,char_col = interpolating_pos(char_x,char_y)
         grid[char_col][char_row] = char.label
 
     return grid
-    
+
 def write_chars_into_txt(grid):
 
     out = open('test.txt', 'w')
@@ -106,7 +104,7 @@ def write_chars_into_txt(grid):
 
 def normalize(data):
 
-    text_region,image_name,index = data 
+    text_region,image_name,index = data
 
     new_text_region = new_Image("RGB",(832,832),"red")
     temp_size = text_region.size
@@ -140,14 +138,17 @@ def normalize_text_regions(liste_images,image_name):
     liste_dist = []
 
 
-    pool = Pool(round(len(liste_images)+0.5/2)) 
+    pool = Pool(round(len(liste_images)+0.5/2))
 
 
-    results = pool.map(normalize, zip(liste_images,[image_name for _ in range(len(liste_images))], range(len(liste_images))))
+    results = pool.map(normalize,
+                       zip(liste_images,
+                          [image_name for _ in range(len(liste_images))],
+                           range(len(liste_images))))
 
     for result in results:
 
         liste_scale_factors.append(result[0])
         liste_dist.append(result[1])
-        
+
     return liste_scale_factors,liste_dist
