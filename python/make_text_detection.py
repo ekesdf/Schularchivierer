@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 
 
-import sys
+from sys import path
 from os import chdir, environ
-
-environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-chdir("/home/yolo/Schreibtisch/Schularchivierer")
-sys.path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
-
 from tensorflow import config
 
+
+
+###                  ###
+# setting configvalues #
+###                  ###
+environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+chdir("/home/yolo/Schreibtisch/Schularchivierer")
+path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
 gpus = config.list_physical_devices('GPU')
 config.experimental.set_memory_growth(gpus[0], True)
 config.experimental.set_memory_growth(gpus[1], True)
@@ -21,17 +24,14 @@ from time import process_time, time
 from ai.char_classification.python.classify_chars import make_classification
 from ai.char_localization.python.detect_char import make_char_detection
 from ai.text_region_localization.python.detect_region import make_region_detection
-from python.testroom.make_to_grid2 import write_chars_into_txt
-from python.testroom.map_detections_in_to_a_grid import write_char_into_the_grid
-from python.utils.classes import PDF, Image, Textregion
+from python.utils.make_to_grid_and_txt import write_chars_into_txt,write_char_into_the_grid
+from python.utils.classes import Image, Textregion
 from python.utils.clear_temp_folder import clear_temp_folder
 from python.utils.cut_out_detections import cut_image
 from python.utils.normalize_text_regions import normalize_text_regions
 
 count_chars = 0
-pdf_shape =210,297
 cwd2 = "temp/images/text_regions/" 
-cwd3 = "temp/images/chars/"
 temp = []
 liste_chars = []
 
@@ -109,13 +109,10 @@ img = Image(image_name,image_shape,temp)
 ###        ###
 #  sdfsdfs   #
 ###        ###
-# out = open("chars.txt","w")
 
 for region in img.textregions:
      
     chars,time_chars_detection = make_char_detection(cwd2+image_name+"/"+region.name)
-    
-    # out.write(str(chars)+"\n")
 
     liste_chars_cutout = cut_image(chars,cwd2+image_name+"/"+region.name,"char")
 

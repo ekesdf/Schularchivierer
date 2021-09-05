@@ -3,18 +3,19 @@ from shutil import rmtree
 from os.path import exists
 from PIL.Image import open as open_image
 
+path = "temp/annotations/"
 
 def make_text_region_annotations(liste_detections,image_name,mode):
 
-    if exists("temp/annotations/"+mode+"s/"+image_name):
+    if exists(path+mode+"s/"+image_name):
 
-        rmtree("temp/annotations/"+mode+"s/"+image_name)
+        rmtree(path+mode+"s/"+image_name)
     
-    mkdir("temp/annotations/"+mode+"s/"+image_name)
+    mkdir(path+mode+"s/"+image_name)
 
     for index, detection in enumerate(liste_detections):
         
-        with open("temp/annotations/"+mode+"s/"+image_name+"/"+str(index)+".txt","w") as file:
+        with open(path+mode+"s/"+image_name+"/"+str(index)+".txt","w") as file:
 
             if mode == "text_region": 
 
