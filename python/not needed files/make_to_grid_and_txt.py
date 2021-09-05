@@ -9,17 +9,6 @@ rows = 50
 
 grid = [[" " for _ in range(cols)] for _ in range(rows) ]
 
-def write_char_into_the_grid(liste_chars):
-
-    for char in liste_chars:
-
-        char_x = char.normalized_x1+round((char.normalized_x2 - char.normalized_x1) / 2)
-        char_y = char.normalized_y1+round((char.normalized_y2 - char.normalized_y1) / 2)
-        
-        char_row,char_col = interpolating_pos(char_x,char_y)
-        grid[char_col][char_row] = char.label
-
-    return grid
 
 def interpolating_pos(inp_y, inp_x):
     '''Interpolates the given Pos of the char in the image to the actual pos in the PDF'''
@@ -34,6 +23,18 @@ def interpolating_pos(inp_y, inp_x):
 
     return out_y, out_x
 
+def write_char_into_the_grid(liste_chars):
+
+    for char in liste_chars:
+
+        char_x = char.normalized_x1+round((char.normalized_x2 - char.normalized_x1) / 2)
+        char_y = char.normalized_y1+round((char.normalized_y2 - char.normalized_y1) / 2)
+        
+        char_row,char_col = interpolating_pos(char_x,char_y)
+        grid[char_col][char_row] = char.label
+
+    return grid
+    
 def write_chars_into_txt(grid):
 
     out = open('test.txt', 'w')

@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 
-from sys import path
 from os import chdir, environ
+from sys import path
+
 from tensorflow import config
-
-
 
 ###                  ###
 # setting configvalues #
@@ -24,11 +23,10 @@ from time import process_time, time
 from ai.char_classification.python.classify_chars import make_classification
 from ai.char_localization.python.detect_char import make_char_detection
 from ai.text_region_localization.python.detect_region import make_region_detection
-from python.utils.make_to_grid_and_txt import write_chars_into_txt,write_char_into_the_grid
+
 from python.utils.classes import Image, Textregion
-from python.utils.clear_temp_folder import clear_temp_folder
-from python.utils.cut_out_detections import cut_image
-from python.utils.normalize_text_regions import normalize_text_regions
+from python.utils.functions import (clear_temp_folder, cut_image, normalize_text_regions,
+                                    write_char_into_the_grid, write_chars_into_txt)
 
 count_chars = 0
 cwd2 = "temp/images/text_regions/" 
@@ -38,8 +36,8 @@ liste_chars = []
 ###                                           ###
 # INPUT_PATH to the image you want to detect on #
 ###                                           ###
-
 image_path = "input/test.jpg"
+
 
 ###                                              ###
 # Deletes all the existing folders and             #
@@ -106,9 +104,9 @@ for index in range(len(text_regions)):
 
 img = Image(image_name,image_shape,temp)
 
-###        ###
-#  sdfsdfs   #
-###        ###
+### ###
+#     #
+### ###
 
 for region in img.textregions:
      
@@ -126,9 +124,8 @@ print(f"\nThe model has detected {count_chars} Chars in {round(time()-start_char
 ### ###
 #     #
 ### ###
+
 grid = write_char_into_the_grid(liste_chars)
-
-
 write_chars_into_txt(grid)
 
 print(f"To translate the Site took {process_time()} seconds\n")    
