@@ -1,4 +1,4 @@
-from numpy import array as np_array, argmax as np_argmax 
+from numpy import array as np_array, argmax as np_argmax
 from time import time
 from cv2 import imread as cv2_imread
 from cv2 import dnn
@@ -19,7 +19,6 @@ def make_char_detection(image_path):
 	boxes = []
 	confidences = []
 	results = []
-	
 
 	image = cv2_imread(image_path)
 	(H, W) = image.shape[:2]
@@ -39,7 +38,7 @@ def make_char_detection(image_path):
 
 	# loop over each of the layer outputs
 	for output in layeroutputs:
-		
+
 		# loop over each of the detections
 		for detection in output:
 
@@ -74,14 +73,14 @@ def make_char_detection(image_path):
 	# apply non-maxima suppression to suppress weak, overlapping bounding
 	# boxes
 	idxs = dnn.NMSBoxes(boxes, confidences, CONFIDENCE_THRESHOLD,0.2)
-	
+
 
 	# ensure at least one detection exists
 	if len(idxs) > 0:
-		
+
 		# loop over the indexes we are keeping
 		for i in idxs.flatten():
-			
+
 			# extract the bounding box coordinates
 			(x, y) = (boxes[i][0], boxes[i][1])
 			(w, h) = (boxes[i][2], boxes[i][3])

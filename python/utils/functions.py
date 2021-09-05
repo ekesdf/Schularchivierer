@@ -1,6 +1,6 @@
 from multiprocessing import Pool
 from os import mkdir
-from os.path import exists
+# from os.path import exists
 from shutil import rmtree
 
 from numpy import interp
@@ -9,12 +9,14 @@ from PIL.Image import open as open_image, new as new_Image, NEAREST
 cols = 70
 rows = 50
 
-grid = [[" " for _ in range(cols)] for _ in range(rows) ]
+grid = [[" " for _ in range(cols)] for _ in range(rows)]
 
 path = "temp/images/"
 cwd = "temp/images/text_regions/"
 
 def clear_temp_folder():
+
+    '''Deletes all folder in the temp folder'''
 
     rmtree("temp/images")
     mkdir("temp/images")
@@ -22,6 +24,11 @@ def clear_temp_folder():
     mkdir("temp/images/text_regions")
 
 def cut(data):
+
+    '''
+    Get a PIL-Image object and crops the given bbox from it.
+    Saves the cropped bbox int to the corresponging image folder
+    '''
 
     detection,img,mode,img_name,index = data
 
@@ -34,16 +41,17 @@ def cut(data):
 def cut_image(list_detections, image_path, mode):
 
     """
-    Gets a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...]\n
-    and cuts the regions out and stores them in the temp folder under temp/images/text_regions/NAME_OF_THE_REGION.\n
-    Returns a list of PIL.Image objects of the cut out regions
+    Gets a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...].
+    Cuts the regions out and stores them in the temp folder under temp/images/text_regions/NAME_OF_THE_REGION.
+    Returns a list of PIL.Image objects of the cut out regions.
     """
+
+    liste_images = []
 
     img = open_image(image_path)
     img_name = image_path.split("/")[len(image_path.split("/"))-1]
-    liste_images = []
 
-    if exists(path+mode+"s/"+img_name): rmtree(path+mode+"s/"+img_name)
+    # if exists(path+mode+"s/"+img_name): rmtree(path+mode+"s/"+img_name)
 
     mkdir(path+mode+"s/"+img_name)
 
@@ -64,7 +72,7 @@ def cut_image(list_detections, image_path, mode):
 
 def interpolating_pos(inp_y, inp_x):
 
-    '''Interpolates the given Pos of the char in the image to the actual pos in the PDF'''
+    '''Interpolates the given Pos of the char in the image to the actual pos in the PDF.'''
 
     out_y = interp(inp_y, [0, 3484], [1, 580])
     out_x = interp(inp_x, [0, 2397], [1, 210])
@@ -78,6 +86,11 @@ def interpolating_pos(inp_y, inp_x):
 
 def write_char_into_the_grid(liste_chars):
 
+    '''
+    Gets a list of Char objects and returns a 2D Array with Char positing in the image mapped to a 70 by 50 Grid.
+    The Grid consists of empty string and the actual Char labels.
+    '''
+
     for char in liste_chars:
 
         char_x = char.normalized_x1+round((char.normalized_x2 - char.normalized_x1) / 2)
@@ -89,6 +102,11 @@ def write_char_into_the_grid(liste_chars):
     return grid
 
 def write_chars_into_txt(grid):
+
+    '''
+    Writes the given grid into a Txt file. To simplify the actual converting process from a grid to the pdf itself.
+    One row in the grid equals one line in a txt file and one col equals one char in the txt.
+    '''
 
     out = open('test.txt', 'w')
 
@@ -103,6 +121,13 @@ def write_chars_into_txt(grid):
 
 
 def normalize(data):
+
+    '''
+    Gets a data var this is due to the fact this function is called in multiprocessing Pool.
+    The data var consists of 3 values: a textregion object, the name of the input image
+    and the index of the text_region. It returns a 832 by 832 image to with red bezel.
+    To improve and simplify the charloacalization
+    '''
 
     text_region,image_name,index = data
 
@@ -120,8 +145,6 @@ def normalize(data):
 
     new_text_region.save(cwd+image_name+"/normalized "+str(index)+".jpg")
 
-    index += 1
-
     return (temp_size[0]/832,temp_size[1]/832),(dist_left,dist_top)
 
 
@@ -133,13 +156,10 @@ def normalize_text_regions(liste_images,image_name):
     The image is positioned in the center of the other image with its own center.
     """
 
-    # index = 0
     liste_scale_factors = []
     liste_dist = []
 
-
     pool = Pool(round(len(liste_images)+0.5/2))
-
 
     results = pool.map(normalize,
                        zip(liste_images,
