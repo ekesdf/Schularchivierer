@@ -7,9 +7,9 @@ path = "temp/annotations/"
 
 def make_text_region_annotations(liste_detections,image_name,mode):
 
-    if exists(path+mode+"s/"+image_name):
+    
 
-        rmtree(path+mode+"s/"+image_name)
+    if exists(path+mode+"s/"+image_name): rmtree(path+mode+"s/"+image_name)
 
     mkdir(path+mode+"s/"+image_name)
 

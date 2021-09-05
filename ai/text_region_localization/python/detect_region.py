@@ -13,8 +13,8 @@ HEIGHT = 480
 
 def make_region_detection(image_path):
     """
-    Detects the regions of texts in the image read from the given image_path.\n
-    Returns a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...]\n
+    Detects the regions of texts in the image read from the given image_path.
+    Returns a 2 Array of ints with the given format [[x1,y1,x2,y2],[x1, y1, x2, y2],...]
     and the time in seconds it took to predict the regions
     """
 
