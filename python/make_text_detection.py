@@ -10,6 +10,7 @@ from tensorflow import config
 # setting configvalues #
 ###                  ###
 environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
 chdir("/home/yolo/Schreibtisch/Schularchivierer")
 path.insert(0, "/home/yolo/Schreibtisch/Schularchivierer")
 gpus = config.list_physical_devices('GPU')
@@ -36,7 +37,7 @@ liste_chars = []
 ###                                           ###
 # INPUT_PATH to the image you want to detect on #
 ###                                           ###
-image_path = "input/test.jpg"
+image_path = "input/test0001.jpg"
 
 
 ###                                              ###

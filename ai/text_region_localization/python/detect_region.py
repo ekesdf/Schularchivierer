@@ -30,8 +30,8 @@ def make_region_detection(image_path):
 
     # determine only the *output* layer names that we need from YOLO
     ln = net.getLayerNames()
-    ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
+    ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
     blob = dnn.blobFromImage(image, 1 / 255.0, (WIDTH, HEIGHT), swapRB=True, crop=False)
 
     net.setInput(blob)
