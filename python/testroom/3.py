@@ -20,8 +20,7 @@ pdf.set_font("Courier", size=14)
 f = open("test.txt", "r")
 
 # insert the texts in pdf
-for index, x in enumerate(f):
-
+for x in f:
     pdf.write(14, txt=x)  #, ln = 1, align = 'L')
 
 # save the pdf with name .pdf

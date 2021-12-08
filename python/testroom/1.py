@@ -63,7 +63,7 @@ def make_region_detection(image_path):
                 # size of the image, keeping in mind that YOLO actually
                 # returns the center (x, y)-coordinates of the bounding
                 # box followed by the boxes' width and height
-                box = detection[0:4] * np_array([W, H, W, H])
+                box = detection[:4] * np_array([W, H, W, H])
                 (centerx, centery, width, height) = box.astype("int")
 
                 # use the center (x, y)-coordinates to derive the top and
@@ -75,7 +75,7 @@ def make_region_detection(image_path):
                 # and class IDs
                 boxes.append([x, y, int(width), int(height)])
                 confidences.append(float(confidence))
-                # classids.append(classid)
+                            # classids.append(classid)
 
     # apply non-maxima suppression to suppress weak, overlapping bounding
     # boxes
